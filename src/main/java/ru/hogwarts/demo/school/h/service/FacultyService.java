@@ -3,7 +3,10 @@ package ru.hogwarts.demo.school.h.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.demo.school.h.model.Faculty;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
 
 @Service
 public class FacultyService {
@@ -31,5 +34,17 @@ public class FacultyService {
     public Faculty deleteFaculty(long id) {
         return faculties.remove(id);
     }
+    public Collection<Faculty> findByColor(String color) {
+        ArrayList<Faculty> result = new ArrayList<>();
+        for (Faculty faculty : faculties.values()) {
+            if (Objects.equals(faculty.getColor(), color)) {
+                result.add(faculty);
+            }
+        }
+        return result;
+    }
+
+
+
 }
 
