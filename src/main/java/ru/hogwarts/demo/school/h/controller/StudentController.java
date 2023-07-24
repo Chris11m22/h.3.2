@@ -22,7 +22,9 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudentInfo(@PathVariable(required = false) Long id,
+                                                  @PathVariable(required = false) String name,
+                                                  @PathVariable(required = false) int age) {
         studentService.findStudent(id);
         return ResponseEntity.notFound().build();
     }
