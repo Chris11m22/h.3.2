@@ -61,10 +61,12 @@ public class FacultyController {
         }
         return ResponseEntity.ok(facultyService.findByColor(color));
     }
-
     @GetMapping
     public Collection<Student> findAllStudentsByFaculty_Id(@PathVariable Long id) {
         return facultyService.findAllStudentsByFaculty_Id(id);
     }
+
+
+
 
 }
