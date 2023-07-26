@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.demo.school.h.model.Faculty;
+import ru.hogwarts.demo.school.h.model.Student;
 import ru.hogwarts.demo.school.h.service.FacultyService;
 
 import java.util.Collection;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/faculty")
@@ -49,14 +49,22 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color,
                                                              @PathVariable(required = false) String name) {
         if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.findByColor());
+            return ResponseEntity.ok(facultyService.findByColor(color));
         }
-        return ResponseEntity.ok(Collections.emptyList());
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByColor(name));
+        }
+        return ResponseEntity.ok(facultyService.findByColor(color));
     }
 
+    @GetMapping
+    public Collection<Student> findAllStudentsByFaculty_Id(@PathVariable Long id) {
+        return facultyService.findAllStudentsByFaculty_Id(id);
+    }
 
 }

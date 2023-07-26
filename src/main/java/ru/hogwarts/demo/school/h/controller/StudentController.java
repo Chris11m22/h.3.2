@@ -29,6 +29,7 @@ public class StudentController {
         }
         return ResponseEntity.ok(student);
     }
+
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentService.addStudent(student);
@@ -48,6 +49,7 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping
     public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
         if (age > 0) {

@@ -18,7 +18,7 @@ public class StudentService {
     }
 
     public Student addStudent(Student student) {
-     return studentRepository.save(student);
+        return studentRepository.save(student);
     }
 
     public Student findStudent(long id) {
@@ -30,11 +30,15 @@ public class StudentService {
     }
 
     public void deleteStudent(long id) {
-       studentRepository.deleteById(id);
+        studentRepository.deleteById(id);
     }
 
     public Collection<Student> findByAge() {
-       return studentRepository.findAll();
+        return studentRepository.findAll();
+    }
+
+    public Collection<Student> findByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
     }
 }
 
