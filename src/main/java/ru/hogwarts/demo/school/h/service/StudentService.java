@@ -71,7 +71,7 @@ public class StudentService {
                 InputStream is = avatarFile.getInputStream();
                 OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
                 BufferedInputStream bis = new BufferedInputStream(is, 600);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 600);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 600)
         ) {
             bis.transferTo(bos);
         }
