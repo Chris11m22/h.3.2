@@ -19,6 +19,9 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
+    public static List<Avatar> getAllAvatar() {
+        return getAllAvatar();
+    }
 
 
     public Avatar addAvatar(Avatar avatar) {

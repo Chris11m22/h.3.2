@@ -5,4 +5,4 @@ select * from student where age < student.id;
 select * from student order by age;
 SELECT COUNT(*) FROM student;
 SELECT AVG(amount) from student by age;
-SELECT * FROM student  OFFSET 4
+SELECT * FROM student  OFFSET 4;
