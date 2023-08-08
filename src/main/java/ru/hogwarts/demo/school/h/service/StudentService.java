@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.demo.school.h.model.Avatar;
 import ru.hogwarts.demo.school.h.model.Student;
+import ru.hogwarts.demo.school.h.model.StudentsByCategory;
 import ru.hogwarts.demo.school.h.repository.AvatarRepository;
 import ru.hogwarts.demo.school.h.repository.StudentRepository;
 
@@ -13,6 +14,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -93,7 +95,12 @@ public class StudentService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
+    public List<StudentsByCategory> getStudentsByCategory(){
+       return studentRepository.getStudentsByCategory();
+    }
+
 }
+
 
 
 

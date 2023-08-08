@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 @RestController
@@ -98,6 +99,11 @@ public class StudentController {
             is.transferTo(os);
 
         }
+    }
+    @GetMapping
+    public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
+        List<Avatar> avatars = AvatarService.getAllAvatar();
+        return ResponseEntity.ok(avatars);
     }
 
 
