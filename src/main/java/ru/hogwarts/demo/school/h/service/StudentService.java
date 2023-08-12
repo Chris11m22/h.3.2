@@ -98,6 +98,12 @@ public class StudentService {
     public List<StudentsByCategory> getStudentsByCategory(){
        return studentRepository.getStudentsByCategory();
     }
+    public List<Student> getStudentByAge(int age){
+        return studentRepository.getStudentByAge(age);
+    }
+    public List<Student> getStudentByName(String name){
+        return studentRepository.getStudentByName(name);
+    }
 
 }
 

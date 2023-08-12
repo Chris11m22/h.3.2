@@ -101,10 +101,21 @@ public class StudentController {
         }
     }
     @GetMapping
+    public ResponseEntity<List<Student>> getStudentByAge(@PathVariable("age") int age){
+        List<Student> students = studentService.getStudentByAge(age);
+        return ResponseEntity.ok(students);
+    }
+   @GetMapping
+   public ResponseEntity<List<Student>> getStudentByName(@PathVariable("name") String name){
+        List<Student> students= studentService.getStudentByName(name);
+        return ResponseEntity.ok(students);
+   }
+    @GetMapping
     public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
         List<Avatar> avatars = AvatarService.getAllAvatar();
         return ResponseEntity.ok(avatars);
     }
+
 
 
 }

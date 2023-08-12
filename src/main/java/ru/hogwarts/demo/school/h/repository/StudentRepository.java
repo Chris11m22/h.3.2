@@ -11,8 +11,13 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-   Collection<Student> findByAgeBetween(int minAge, int maxAge);
-@Query (value = "SELECT category, SUM(amount) as amount FROM student GROUP BY category" , nativeQuery = true)
+    Collection<Student> findByAgeBetween(int minAge, int maxAge);
+
+    @Query(value = "SELECT category, SUM(amount) as amount FROM student GROUP BY category", nativeQuery = true)
     List<StudentsByCategory> getStudentsByCategory();
+
+    List<Student> getStudentByAge(int age);
+
+    List<Student> getStudentByName(String name);
 
 }
