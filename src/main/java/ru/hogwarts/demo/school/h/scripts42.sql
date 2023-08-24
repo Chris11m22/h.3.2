@@ -1,16 +1,5 @@
-CREATE TABLE student (
-    ...,
-    age INTEGER CHECK (age > 16),
-    ...
-);
-CREATE TABLE student (
-    ...,
-    name TEXT UNIQUE NOT NULL,
-    ...
-);
-CREATE TABLE student (
-    ...,
-    faculty TEXT UNIQUE,
-    ...
-);
+alter table student add constraint age_constrain check (age>16);
+alter table student add primary key (name);
+alter table faculty add constraint color_name_constrain unique (name , color);
+alter table student alter column age set default 20;
 
