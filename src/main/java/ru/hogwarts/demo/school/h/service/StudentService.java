@@ -1,5 +1,7 @@
 package ru.hogwarts.demo.school.h.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +27,7 @@ public class StudentService {
     @Value("${student.avatars.dir.path}")
     private String avatarDir;
 
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
     public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
@@ -36,35 +39,43 @@ public class StudentService {
 
 
     public Student addStudent(Student student) {
+        logger.info("Was invoked method for add student");
         return studentRepository.save(student);
     }
 
     public Student findStudent(long id) {
+        logger.info("Was invoked method for find student");
         return studentRepository.findById(id).get();
     }
 
     public Student editStudent(Student student) {
+        logger.info("Was invoked method for edit student");
         return studentRepository.save(student);
     }
 
     public void deleteStudent(long id) {
+        logger.info("Was invoked method for delete student");
         studentRepository.deleteById(id);
     }
 
     public Collection<Student> findByAge() {
+        logger.info("Was invoked method for find student by age");
         return studentRepository.findAll();
     }
 
     public Collection<Student> findByAgeBetween(int minAge, int maxAge) {
+        logger.info("Was invoked method for find age between");
         return studentRepository.findByAgeBetween(minAge, maxAge);
 
     }
 
     public Avatar findAvatar(long studentId) {
+        logger.info("Was invoked method for find avatar");
         return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for upload avatar");
         Student student = findStudent(studentId);
         Path filePath = Path.of(avatarDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -87,6 +98,8 @@ public class StudentService {
     }
 
     public Avatar findAvatar(Long studentId) {
+        logger.info("Was invoked method for find avatar");
+        logger.error("There is not avatar with id = " + studentId);
         return avatarRepository.findByStudentId(studentId).orElseThrow();
 
     }
