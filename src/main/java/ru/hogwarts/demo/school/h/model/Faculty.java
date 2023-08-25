@@ -1,26 +1,45 @@
 package ru.hogwarts.demo.school.h.model;
 
+
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
 public class Faculty {
-
-    private Long id;
+    @Id
+    @GeneratedValue
+    private long id;
     private String name, color;
+    @OneToMany
+    @JoinColumn(name = "faculty_id")
+    private Set<Student> student;
+
 
     public Faculty() {
     }
 
-    public Faculty(Long id, String name, String color) {
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                '}';
+    }
+
+    public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
