@@ -17,6 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -28,6 +31,7 @@ public class StudentService {
     private String avatarDir;
 
     Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
@@ -35,7 +39,6 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
-
 
 
     public Student addStudent(Student student) {
@@ -108,16 +111,86 @@ public class StudentService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-    public List<StudentsByCategory> getStudentsByCategory(){
-       return studentRepository.getStudentsByCategory();
+    public List<StudentsByCategory> getStudentsByCategory() {
+        return studentRepository.getStudentsByCategory();
     }
-    public List<Student> getStudentByAge(int age){
+
+    public List<Student> getStudentByAge(int age) {
         return studentRepository.getStudentByAge(age);
     }
-    public List<Student> getStudentByName(String name){
+
+    public List<Student> getStudentByName(String name) {
         return studentRepository.getStudentByName(name);
     }
 
+    public Map<String, List<Student>> getNameAStream() {
+        return studentRepository.findAll().stream()
+                .filter(student -> student.getName().startsWith("A"))
+                .collect(Collectors.groupingBy(Student::getName));
+    }
+    public double AgeOfStudentsStream() {
+        return studentRepository.findAll().stream()
+                .collect(
+                        Collectors.averagingDouble(Student::getAge)
+                );
+    }
+
+    public Integer tack4() {
+        return Stream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, Integer::sum);
+    }
+
+    public void getStudentOfStream() {
+        var students = studentRepository.findAll()
+                .stream()
+                .limit(6)
+                .collect(Collectors.toList());
+
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+
+
+        new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+
+        }).start();
+    }
+
+    public void getStudentOfStreamSync() {
+        var students = studentRepository.findAll()
+                .stream()
+                .limit(6)
+                .collect(Collectors.toList());
+
+        print(students.get(0));
+        print(students.get(1));
+
+
+        new Thread(() -> {
+            print(students.get(2));
+            print(students.get(3));
+
+        }).start();
+
+        new Thread(() -> {
+            print(students.get(4));
+            print(students.get(5));
+
+        }).start();
+    }
+
+    private synchronized void print(Object obj) {
+        System.out.println(obj.toString());
+    }
 }
 
 

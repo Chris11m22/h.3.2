@@ -71,6 +71,14 @@ public class FacultyController {
         List<Student> students = facultyService.getStudentByCAndF(color, faculty);
         return ResponseEntity.ok(students);
     }
+    public Collection<Faculty> all() {
+        return facultyService.getAll();
+    }
+
+    @GetMapping("/longestName")
+    public String getLongestNameFaculty() {
+        return facultyService.getLongestNameFaculty();
+    }
 
 
 

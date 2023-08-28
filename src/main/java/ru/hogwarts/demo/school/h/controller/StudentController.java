@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -74,7 +75,8 @@ public class StudentController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
-    @GetMapping(value = "/{id}/avatar",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+
+    @GetMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable long id, @RequestParam MultipartFile avatar) throws IOException {
         if (avatar.getSize() >= 600 * 600) {
             return ResponseEntity.badRequest().body("File is to small");
@@ -82,8 +84,9 @@ public class StudentController {
         studentService.uploadAvatar(id, avatar);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(value = "/{id}/avatar" )
-    public ResponseEntity<Long> downloadAvatar(@PathVariable Long id){
+
+    @GetMapping(value = "/{id}/avatar")
+    public ResponseEntity<Long> downloadAvatar(@PathVariable Long id) {
         Avatar avatar = studentService.findAvatar(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
@@ -91,34 +94,61 @@ public class StudentController {
 
         return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(headers)).body(avatar.getFileSize());
     }
-    @GetMapping(value = "/{id}/avatar" )
-    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException{
+
+    @GetMapping(value = "/{id}/avatar")
+    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = studentService.findAvatar(id);
         Path path = Path.of(avatar.getFilePath());
         try (InputStream is = Files.newInputStream(path);
-        OutputStream os = response.getOutputStream();) {
+             OutputStream os = response.getOutputStream();) {
             response.setContentType(avatar.getMediaType());
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
 
         }
     }
+
     @GetMapping
-    public ResponseEntity<List<Student>> getStudentByAge(@PathVariable("age") int age){
+    public ResponseEntity<List<Student>> getStudentByAge(@PathVariable("age") int age) {
         List<Student> students = studentService.getStudentByAge(age);
         return ResponseEntity.ok(students);
     }
-   @GetMapping
-   public ResponseEntity<List<Student>> getStudentByName(@PathVariable("name") String name){
-        List<Student> students= studentService.getStudentByName(name);
-        return ResponseEntity.ok(students);
-   }
+
     @GetMapping
-    public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
+    public ResponseEntity<List<Student>> getStudentByName(@PathVariable("name") String name) {
+        List<Student> students = studentService.getStudentByName(name);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
         List<Avatar> avatars = AvatarService.getAllAvatar();
         return ResponseEntity.ok(avatars);
     }
 
+    @GetMapping("/getNameA")
+    public Map<String, List<Student>> getNameASteam() {
+        return studentService.getNameAStream();
+    }
 
+    @GetMapping("/averageAgeOfStudentsStream")
+    public double AgeOfStudentsStream() {
+        return studentService.AgeOfStudentsStream();
+    }
 
+    @GetMapping("tack4")
+    public int tack4() {
+        return studentService.tack4();
+    }
+
+    @GetMapping("/parallelStream")
+    public void getStudentsOfStream() {
+        studentService.getStudentOfStream();
+    }
+
+    @GetMapping("/synchronizedMethod")
+    public void getStudentOfStreamSync() {
+        studentService.getStudentOfStreamSync();
+    }
 }
+

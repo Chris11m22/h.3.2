@@ -9,6 +9,7 @@ import ru.hogwarts.demo.school.h.repository.FacultyRepository;
 
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -63,6 +64,16 @@ public class FacultyService {
     public List<Student> getStudentByCAndF(String color, String faculty) {
         logger.info("Was invoked method for get student");
         return facultyRepository.getStudentByCAndF(color, faculty);
+    }
+    public Collection<Faculty> getAll() {
+        return getAll();
+    }
+
+    public String getLongestNameFaculty() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length))
+                .orElseThrow(() -> new IllegalArgumentException("not found any faculty"));
     }
 }
 
